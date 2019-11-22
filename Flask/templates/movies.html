@@ -1,0 +1,10 @@
+{%extends 'basic.html'%}
+
+{%block main%}
+<h1>Сегодня в кино</h1>
+<ul>
+    {% for movie in movie %}
+        <li>{{ movie }}</li>
+    {% endfor %}
+</ul>
+{%endblock%}
