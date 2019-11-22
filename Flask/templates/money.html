@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <body bgcolor=green text=silver>
+    <title>Курс валют</title>
+</head>
+
+<body>
+    <div align="center"><font size=5>Категории:</font>
+        <h4 ><a href="{{ url_for('home') }}">Начальная страница</a></h4>
+        <h4><a href="{{ url_for('weather') }}">Погода</a></h4>
+        <h4><a href="{{ url_for('movies') }}">Фильмы</a></h4>
+    </div>
+
+<h2 align="center">Курсы валют на сегодня {{ time_now }}</h2>
+
+<div align="center"><font size=4>
+    {% for rate in course %}
+    <div>
+        За {{ rate.Cur_Scale }} {{ rate.Cur_Name }} {{ rate.Cur_OfficialRate }} Белоруских рублей
+    </div>
+    {% endfor %}
+</font>
+</div>
+</body>
+</html>

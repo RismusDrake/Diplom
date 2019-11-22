@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <body bgcolor=green text=silver>
+    <title>Погода</title>
+</head>
+
+<body>
+    <div align="center"><font size=5>Категории:</font>
+        <h4><a href="{{ url_for('home') }}">Начальная страница</a></h4>
+        <h4><a href="{{ url_for('money') }}">Курс валют</a></h4>
+        <h4><a href="{{ url_for('movies') }}">Фильмы</a></h4>
+    </div>
+
+<h2 align="center">Погода на сегодня {{ time_now }}</h2>
+
+<div>
+    <p align="center">
+        <font size=4>Город: {{ weather.city }}</font>
+    </p>
+    <p align="center">
+        <font size=4>Температура: {{ weather.temp }}</font>
+    </p>
+    <p align="center">
+        <font size=4>Влажность: {{ weather.humidity }}</font>
+    </p>
+    <p align="center">
+        <font size=4>Давление: {{ weather.pressure }}</font>
+    </p>
+</div>
+</body>
+</html>

@@ -1,2 +1,3 @@
-from . movies import movie
-# from . money import get_money
+from . weather import get_weather
+from . money import course
+from . movies import list_movies 

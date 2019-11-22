@@ -19,16 +19,12 @@ def bot_hello(message):
 
 @bot.callback_query_handler(lambda h: h.data == '/help')
 def bot_help(callback_query: telebot.types.CallbackQuery):
-	keyboard = telebot.types.InlineKeyboardMarkup(row_width=1)
+	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
 	bot_weather = telebot.types.InlineKeyboardButton('Погода',callback_data='/weather')
-	bot_courses = telebot.types.InlineKeyboardButton('Курсы валют',callback_data='/courses')
-	course_usd = telebot.types.InlineKeyboardButton('Курc Доллара',callback_data='/course_usd')
-	course_eur = telebot.types.InlineKeyboardButton('Курс Евро',callback_data='/course_eur')
-	course_rub = telebot.types.InlineKeyboardButton('Курс Российского рубля',callback_data='/course_rub')
-	course_uah = telebot.types.InlineKeyboardButton('Курс Гривен',callback_data='/course_uah')
+	bot_courses_all = telebot.types.InlineKeyboardButton('Курс валют',callback_data='/courses_all')
 	bot_movies = telebot.types.InlineKeyboardButton('Фильмы',callback_data='/movies')
 	bot_location = telebot.types.InlineKeyboardButton("Геолокация", callback_data='/location')
-	keyboard.add(bot_weather, bot_courses, course_usd, course_eur, course_rub, course_uah, bot_movies, bot_location)
+	keyboard.add(bot_weather, bot_courses_all, bot_movies, bot_location)
 	bot.send_message(callback_query.from_user.id, 'Команды на которые я смогу дать ответ: \n\
 /weather - Узнать погоду \n/courses - Узнать курс валют на сегодня \n/course_usd - \
 Узнать курс Доллара на сегодня \n/course_eur - Узнать курс Евро на сегодня \n\
@@ -38,16 +34,12 @@ def bot_help(callback_query: telebot.types.CallbackQuery):
 
 @bot.message_handler(commands=['help'])
 def send_help(message):
-	keyboard = telebot.types.InlineKeyboardMarkup(row_width=1)
+	keyboard = telebot.types.InlineKeyboardMarkup(row_width=2)
 	bot_weather = telebot.types.InlineKeyboardButton('Погода',callback_data='/weather')
-	bot_courses = telebot.types.InlineKeyboardButton('Курсы валют',callback_data='/courses')
-	course_usd = telebot.types.InlineKeyboardButton('Курc Доллара',callback_data='/course_usd')
-	course_eur = telebot.types.InlineKeyboardButton('Курс Евро',callback_data='/course_eur')
-	course_rub = telebot.types.InlineKeyboardButton('Курс Российского рубля',callback_data='/course_rub')
-	course_uah = telebot.types.InlineKeyboardButton('Курс Гривен',callback_data='/course_uah')
+	bot_courses_all = telebot.types.InlineKeyboardButton('Курс валют',callback_data='/courses_all')
 	bot_movies = telebot.types.InlineKeyboardButton('Фильмы',callback_data='/movies')
 	bot_location = telebot.types.InlineKeyboardButton("Геолокация", callback_data='/location')
-	keyboard.add(bot_weather, bot_courses, course_usd, course_eur, course_rub, course_uah, bot_movies, bot_location)
+	keyboard.add(bot_weather, bot_courses_all, bot_movies, bot_location)
 	bot.send_message(message.chat.id, 'Команды на которые я смогу дать ответ: \n\
 /weather - Узнать погоду \n/courses - Узнать курс валют на сегодня \n/course_usd - \
 Узнать курс Доллара на сегодня \n/course_eur - Узнать курс Евро на сегодня \n\
@@ -74,6 +66,17 @@ def weather(message):
 	bot.send_message(message.chat.id, 'В районе ' + message.text + ' сейчас \
 ' + w.get_detailed_status()  + ', температура в среднем ' + str(temp) + ' градусов по Цельсию')
 
+
+@bot.callback_query_handler(lambda c: c.data == '/courses_all')
+def bot_course_all(callback_query: telebot.types.CallbackQuery):
+	keyboard = telebot.types.InlineKeyboardMarkup(row_width=1)
+	bot_courses = telebot.types.InlineKeyboardButton('Курc иностранной валюты',callback_data='/courses')
+	course_usd = telebot.types.InlineKeyboardButton('Курc Доллара',callback_data='/course_usd')
+	course_eur = telebot.types.InlineKeyboardButton('Курс Евро',callback_data='/course_eur')
+	course_rub = telebot.types.InlineKeyboardButton('Курс Российского рубля',callback_data='/course_rub')
+	course_uah = telebot.types.InlineKeyboardButton('Курс Гривен',callback_data='/course_uah')
+	keyboard.add(bot_courses, course_usd, course_eur, course_rub, course_uah)
+	bot.send_message(callback_query.from_user.id, 'Какой курс валют вас интересует?', reply_markup=keyboard)
 
 @bot.callback_query_handler(lambda c: c.data == '/courses')
 def bot_courses(callback_query: telebot.types.CallbackQuery):
@@ -131,7 +134,7 @@ def bot_courses(callback_query: telebot.types.CallbackQuery):
 			sek_price = p['Cur_OfficialRate']
 		elif p['Cur_Abbreviation'] == 'CHF':
 			chf_price = p['Cur_OfficialRate']
-	bot.send_message(callback_query.from_user.id, f'Курс Белорусского рубля (BYN) к иностранной валюте на сегодня: \n\
+	bot.send_message(callback_query.from_user.id, f'Курс Белорусского рубля (BYN) по отношению к иностранной валюте на сегодня: \n\
 1 Австралийский доллар (AUD) за {aud_price} BYN \n1 Болгарский лев (BGN) за {bgn_price} BYN \n100 Гривен (UAH) за {uah_price} BYN \n\
 10 Датских крон (DKK) за {dkk_price} BYN \n1 Доллар США (USD) за {usd_price} BYN \n1 Евро (EUR) за {eur_price} BYN \n10 Злотых (PLN) за \
 {pln_price} BYN \n100000 Иранских риал (IRR) за {irr_price} BYN \n100 Исландских крон (ISK) за {isk_price} BYN \n100 Йен (JPY) за {jpy_price} \
@@ -198,7 +201,7 @@ def send_money(message):
 			sek_price = p['Cur_OfficialRate']
 		elif p['Cur_Abbreviation'] == 'CHF':
 			chf_price = p['Cur_OfficialRate']
-	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) к иностранной валюте на сегодня: \n\
+	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) по отношению к иностранной валюте на сегодня: \n\
 1 Австралийский доллар (AUD) за {aud_price} BYN \n1 Болгарский лев (BGN) за {bgn_price} BYN \n100 Гривен (UAH) за {uah_price} BYN \n\
 10 Датских крон (DKK) за {dkk_price} BYN \n1 Доллар США (USD) за {usd_price} BYN \n1 Евро (EUR) за {eur_price} BYN \n10 Злотых (PLN) за \
 {pln_price} BYN \n100000 Иранских риал (IRR) за {irr_price} BYN \n100 Исландских крон (ISK) за {isk_price} BYN \n100 Йен (JPY) за {jpy_price} \
@@ -208,7 +211,7 @@ BYN \n1 Канадский доллар (CAD) за {cad_price} BYN \n10 Кита
 (SGD) за {sgd_price} BYN \n100 Сом (KGS) за {kgs_price} BYN \n1000 Тенге (KZT) за {kzt_price} BYN \n10 Турецких лир (TRY) за {try_price} BYN \n\
 1 Фунт стерлингов (GBP) за {gbp_price} BYN \n100 Чешских крон (CZK) за {czk_price} BYN \n10 Шведских крон (SEK) {sek_price} BYN \n\
 1 Швейцарский франк (CHF) {chf_price} BYN')
-	
+
 
 @bot.callback_query_handler(lambda c: c.data == '/course_usd')
 def course_usd(callback_query: telebot.types.CallbackQuery):
@@ -295,10 +298,19 @@ def send_movies(message):
 	bot.send_message(message.chat.id, answer)
 
 
-# @bot.message_handler(commands=['location'])
-# def send_location(message):
+@bot.callback_query_handler(lambda l: l.data == '/location')
+def bot_location(callback_query: telebot.types.CallbackQuery):
+    keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+    location = telebot.types.KeyboardButton('Отправить местоположение', request_location=True)
+    keyboard.add(location)
+    bot.send_message(callback_query.from_user.id, 'Нажмите пожалуйста на кнопку для передачи своей геолокации', reply_markup=keyboard)
 
-# 	bot.send_message(message.chat_id, )
+@bot.message_handler(commands=["location"])
+def location(message):
+	keyboard = telebot.types.ReplyKeyboardMarkup(True, True)
+	location = telebot.types.KeyboardButton('Отправить местоположение', request_location=True)
+	keyboard.add(location)
+	bot.send_message(message.chat.id, 'Нажмите пожалуйста на кнопку для передачи своей геолокации', reply_markup=keyboard)
 
 
-bot.polling(none_stop = True, interval=1)
+bot.polling(none_stop = True, interval=4)

@@ -1,10 +1,35 @@
-{%extends 'basic.html'%}
+<!DOCTYPE html>
+<html lang="en">
 
-{%block main%}
-<h1>Сегодня в кино</h1>
+<head>
+    <meta charset="UTF-8">
+    <body bgcolor=green text=silver>
+    <title>Фильмы</title>
+</head>
+
+<body>
+    <div align="center"><font size=5>Категории:</font>
+        <h4><a href="{{ url_for('home') }}">Начальная страница</a></h4>
+        <h4><a href="{{ url_for('weather') }}">Погода</a></h4>
+        <h4><a href="{{ url_for('money') }}">Курс валют</a></h4>
+    </div>
+
+<h2 align="center">Сегодня в кинотеатрах {{ time_now }}</h2>
+
 <ul>
-    {% for movie in movie %}
-        <li>{{ movie }}</li>
+    {% for film in list_movies %}
+    <li style=" display: inline-block; vertical-align: top; width: 150px; padding: 20px">
+        <a href="{{ film.link }}">
+            <img src="{{ film.image }} ">
+        </a>
+        <b>
+            {{ film.name }}
+        </b>
+        <p>
+            {{ film.info }}
+        </p>
+    </li>
     {% endfor %}
 </ul>
-{%endblock%}
+</body>
+</html>

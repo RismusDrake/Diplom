@@ -2,16 +2,17 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def get_html(url):
-	r = requests.get(url)
-	return r.text
+url = 'https://afisha.tut.by/film/'
+r = requests.get(url)
+soup = BeautifulSoup(r.text, 'lxml')
 
-def get_movies(html):
-	soup = BeautifulSoup(html, 'lxml')
-	list_movies = soup.find('div', {'class': ['col-2 col-2-nobd']}).find('div', {'class\
-': ['col-c']}).find_all('ul', {'class': ['b-lists list_afisha col-5']})
-	return [l_m.find('a', {'class': ['name']}).find('span').text for l_m in list_movies]
+movies = soup.find('div', class_='events-block js-cut_wrapper').find_all('li')
+list_movies = list()
 
-def movie():
-	url = 'https://afisha.tut.by/film/'
-	return get_movies(get_html(url))
+for movie in movies:
+    m = dict()
+    m['name'] = movie.find('img').get('alt')
+    m['link'] = movie.find('a').get('href')
+    m['image'] = movie.find('img').get('src')
+    m['info'] = movie.find('div').find('p').text
+    list_movies.append(m)
