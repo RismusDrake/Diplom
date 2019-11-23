@@ -3,6 +3,7 @@ import pyowm
 from data import bot_api, weather_api
 from data import get_money
 from data import movie
+from pprint import pprint
 
 
 bot = telebot.TeleBot(bot_api)
@@ -284,18 +285,12 @@ def uah(message):
 @bot.callback_query_handler(lambda m: m.data == '/movies')
 def course_usd(callback_query: telebot.types.CallbackQuery):
 	movies = movie()
-	answer = 'Фильмы, которые показывают в кино:\n'
-	for m in range(len(movies)):
-		answer += f'{movies[m]}\n'
-	bot.send_message(callback_query.from_user.id, answer)
+	bot.send_message(callback_query.from_user.id, f'Показ фильмов на сегодня: \n{movies}')
 
 @bot.message_handler(commands=['movies'])
 def send_movies(message):
 	movies = movie()
-	answer = 'Фильмы, которые показывают в кино:\n'
-	for m in range(len(movies)):
-		answer += f'{movies[m]}\n'
-	bot.send_message(message.chat.id, answer)
+	bot.send_message(message.chat.id, f'Показ фильмов на сегодня: \n{movies}')
 
 
 @bot.callback_query_handler(lambda l: l.data == '/location')
@@ -313,4 +308,4 @@ def location(message):
 	bot.send_message(message.chat.id, 'Нажмите пожалуйста на кнопку для передачи своей геолокации', reply_markup=keyboard)
 
 
-bot.polling(none_stop = True, interval=4)
+bot.polling(none_stop = True, interval=3)
