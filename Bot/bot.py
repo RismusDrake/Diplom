@@ -3,7 +3,6 @@ import pyowm
 from data import bot_api, weather_api
 from data import get_money
 from data import movie
-from pprint import pprint
 
 
 bot = telebot.TeleBot(bot_api)
