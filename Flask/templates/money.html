@@ -14,12 +14,12 @@
         <h4><a href="{{ url_for('movies') }}">Фильмы</a></h4>
     </div>
 
-<h2 align="center">Курсы валют на сегодня {{ time_now }}</h2>
+<h2 align="center">Курсы валют на сегодня: {{ time_now }}</h2>
 
 <div align="center"><font size=4>
-    {% for rate in course %}
+    {% for courses in course %}
     <div>
-        За {{ rate.Cur_Scale }} {{ rate.Cur_Name }} {{ rate.Cur_OfficialRate }} Белоруских рублей
+        За {{ courses.Cur_Scale }} {{ courses.Cur_Name }} {{ courses.Cur_OfficialRate }} Белоруских рублей
     </div>
     {% endfor %}
 </font>

@@ -1,8 +1,7 @@
 import requests
 
 
-#Был убран
-weather_api = ''
+weather_api = 'cacb5e0c352d6a65e04b76c87d2a46da'
 
 def get_weather(city = 'Minsk'):
     data = dict()
