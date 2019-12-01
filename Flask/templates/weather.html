@@ -1,34 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+    body {
+    background-image: url(https://storge.pic2.me/upload/754/54779a6bdb6ad.jpg);
+    background-size: cover;
+         }
+</style>
+
 <head>
     <meta charset="UTF-8">
-    <body bgcolor=green text=silver>
-    <title>Погода</title>
+    <title>RismusDrale - weather</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div align="center"><font size=5>Категории:</font>
-        <h4><a href="{{ url_for('home') }}">Начальная страница</a></h4>
-        <h4><a href="{{ url_for('money') }}">Курс валют</a></h4>
-        <h4><a href="{{ url_for('movies') }}">Фильмы</a></h4>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">RismusDrake</a>
+            </div>
+
+            <div class="nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{url_for("home")}}">Главная</a></li>>
+                    <li><a href="{{url_for("weather")}}">Погода</a></li>
+                    <li><a href="{{url_for("money")}}">Курс валют</a></li>
+                    <li><a href="{{url_for("movies")}}">Фильмы</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+
+<body>
+    <div class="container-fluid">
+        <form role="form" class="form-inline">
+            <div class="form-group">
+                <label for="Поиск" style="color:white">Города</label>
+                <input type="Поиск" class="form-control" id="Поиск" placeholder="Введите название города">
+                <button class="btn btn-default">Поиск</button>
+            </div>
+        </form>
     </div>
+</body>
 
-<h2 align="center">Погода на сегодня {{ time_now }}</h2>
+<h2 align="center" style="color:white">Погода на сегодня</h2>
 
-<div>
-    <p align="center">
-        <font size=4>Город: {{ weather.city }}</font>
-    </p>
-    <p align="center">
-        <font size=4>Температура: {{ weather.temp }}</font>
-    </p>
-    <p align="center">
-        <font size=4>Влажность: {{ weather.humidity }}</font>
-    </p>
-    <p align="center">
-        <font size=4>Давление: {{ weather.pressure }}</font>
-    </p>
-</div>
+<body>
+    <div align="center">
+        <font size=4 align="center" style="color:white">Город: {{ weather.city }}</font>
+        <br>
+        <font size=4 style="color:white">Температура: {{ weather.temp }}</font>
+        <br>
+        <font size=4 style="color:white">Влажность: {{ weather.humidity }}</font>
+        <br>
+        <font size=4 style="color:white">Давление: {{ weather.pressure }}</font>
+    </div>
 </body>
 </html>

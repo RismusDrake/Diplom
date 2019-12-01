@@ -11,7 +11,7 @@ itsdangerous==1.1.0
 Jinja2==2.10.3
 lxml==4.4.1
 MarkupSafe==1.1.1
-mysql-connector-python==8.0.18
+mysql-connector-python==8.0.17
 pprint==0.1
 PyMySQL==0.9.3
 pyowm==2.10.0

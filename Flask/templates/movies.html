@@ -1,31 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
+
+<style>
+    body {
+    background-image: url(https://www.zastavki.com/pictures/originals/2014/Backgrounds_Green_waves_on_black_wallpaper_078555_.jpg);
+    background-size: cover;
+         }
+</style>
 
 <head>
     <meta charset="UTF-8">
-    <body bgcolor=green text=silver>
-    <title>Фильмы</title>
+    <title>RismusDrake - movies</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div align="center"><font size=5>Категории:</font>
-        <h4><a href="{{ url_for('home') }}">Начальная страница</a></h4>
-        <h4><a href="{{ url_for('weather') }}">Погода</a></h4>
-        <h4><a href="{{ url_for('money') }}">Курс валют</a></h4>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">RismusDrake</a>
+            </div>
+
+            <div class="nav navbar-nav">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{{url_for("home")}}">Главная</a></li>>
+                    <li><a href="{{url_for("weather")}}">Погода</a></li>
+                    <li><a href="{{url_for("money")}}">Курс валют</a></li>
+                    <li><a href="{{url_for("movies")}}">Фильмы</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+
+<body>
+    <div class="container-fluid">
+        <form role="form" class="form-inline">
+            <div class="form-group">
+                <label for="Поиск" style="color:white">Поиск фильмов</label>
+                <input type="Поиск" class="form-control" id="Поиск" placeholder="Введите название фильма">
+                <button class="btn btn-default">Поиск</button>
+                <body>
+                    <h2><p class="text-center" style="color:white">Список фильмов в кинотеатрах на сегодня</p></h2>
+                    {% for movies in l_m %}
+                        <li style="color:white; display: inline-block; vertical-align: top; width: 200px; padding: 25px">
+                            <a href="{{movies.link}}"><img src="{{movies.image}}"></a>
+                            <p></p>
+                            <p>{{movies.name}}</p>
+                            <p>{{movies.info}}</p>
+                        </li>
+                    {% endfor %}
+                </body>
+            </div>
+        </form>
     </div>
-
-<h2 align="center">Сегодня в кинотеатрах: {{ time_now }}</h2>
-
-<ul>
-    {% for movies in l_m %}
-    <li style=" display: inline-block; vertical-align: top; width: 200px; padding: 25px">
-        <a href="{{ movies.link }}">
-            <img src="{{ movies.image }} ">
-        </a>
-        <b>{{ movies.name }} </b>
-        <p>{{ movies.info }}</p>
-    </li>
-    {% endfor %}
-</ul>
 </body>
 </html>

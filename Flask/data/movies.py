@@ -1,9 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+from .config import url_movie
 
 
-url = 'https://afisha.tut.by/film/'
-r = requests.get(url)
+r = requests.get(url_movie)
 
 soup = BeautifulSoup(r.text, 'lxml')
 list_movies = soup.find('div', {'class': ['col-2 col-2-nobd']}).find('div', {'\
