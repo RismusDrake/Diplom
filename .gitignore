@@ -1,4 +1,4 @@
 /Bot/data/__pycache__
-/Bot/data/config
+/Bot/data/config.py
 /Flask/data/__pycache__
-/Flask/data/config
+/Flask/data/config.py
