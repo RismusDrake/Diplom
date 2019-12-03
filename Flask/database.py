@@ -1,11 +1,11 @@
-import pymysql
+import pymysql																						# Импортированные библиотеки
 import requests
 import re
 from bs4 import BeautifulSoup
-from data import base_url_weather, get_money_for_base, base_url_movie
+from data import base_url_weather, get_money_for_base, base_url_movie								# Импортирование данных из других файлов Python
 
 
-def get_connection():
+def get_connection():																				# Подключение к MySql
     return pymysql.connect(host='localhost',
         				   user='root',
         				   password=Romaric123Romaric,
@@ -14,7 +14,7 @@ def get_connection():
         				   cursorclass=pymysql.cursors.DictCursor)
 
  
-def weather_base(cursor):
+def weather_base(cursor):																			# Создание таблицы для погоды, её запись и завершение записи
 	url = base_url_weather
 	r = requests.get(url)
 	soup = BeautifulSoup(r.text, 'lxml')
@@ -30,7 +30,7 @@ def weather_base(cursor):
 		con.close()
 
 
-def money_base(day, month, year, cursor):
+def money_base(day, month, year, cursor):															# Создание таблицы для курса валют, её запись и завершение записи
 	list_courses = get_money_for_base(f'{day}-{month}-{year}')
 	for course in list_course:
 		c = ('За ' + str(course('Cur_Scale')) + ' ' + course('Cur_Name') + '\
@@ -46,7 +46,7 @@ def money_base(day, month, year, cursor):
 		con.close()
 
 
-def movie_base(cursor):
+def movie_base(cursor):																				# Создание таблицы для списка фильмов, её запись и завершение записи
 	url = base_url_movie
 	r = requests.get(url)
 	soup = BeautifulSoup(r.text, 'lxml')

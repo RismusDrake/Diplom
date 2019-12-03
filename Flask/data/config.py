@@ -1,3 +1,4 @@
+# API ключи и ссылки на парсинг
 weather_api = 'cacb5e0c352d6a65e04b76c87d2a46da'
 
 url_money = 'http://www.nbrb.by/API/ExRates/Rates?Periodicity=0'

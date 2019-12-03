@@ -1,29 +1,27 @@
-from flask import Flask, render_template, url_for
-from data import get_weather
-from data import course
-from data import l_m
+from flask import Flask, render_template, url_for							# Импорт библиотеки
+from data import get_weather, course, l_m									# Импорт нужных данных из других файлов Python
 
 
-app = Flask(__name__)
+app = Flask(__name__)														# Запуск Flask
 
 
-@app.route('/')
+@app.route('/')																# Что будем видеть при этом адресе
 def home():
 	return render_template('home.html')
 
 
-@app.route('/weather')
+@app.route('/weather')														# Что будем видеть при этом адресе
 def weather():
     return render_template('weather.html', weather = get_weather())
 print(get_weather())
 
 
-@app.route('/courses')
+@app.route('/courses')														# Что будем видеть при этом адресе
 def money():
     return render_template('money.html', course = course)
 
 
-@app.route('/movies')
+@app.route('/movies')														# Что будем видеть при этом адресе
 def movies():
 	return render_template('movies.html', l_m = l_m)
 
