@@ -1,7 +1,7 @@
 import telebot 																								# Импортирование библиотек
 import pyowm
 from pyowm.exceptions import OWMError
-from data import bot_api, weather_api, get_money, l_c, get_movie											# Импортирование данных из других файлов Python
+from data import bot_api, weather_api, get_money, get_movie											# Импортирование данных из других файлов Python
 
 
 bot = telebot.TeleBot(bot_api)																				# Указываем какого бота запускать (API bot)
@@ -100,52 +100,52 @@ def send_money(message):																					# при выполнении ко�
 def course_usd(callback_query: telebot.types.CallbackQuery):												# при выполнении команды /course_usd через кнопку
 	money = get_money()
 	bot.send_message(callback_query.from_user.id, f'Курс Белорусского рубля (BYN) к \
-Доллару США на сегодня: \n {l_c[4]}')
+Доллару США на сегодня: \n {money[152:187]}')
 
 @bot.message_handler(commands=['course_usd'])																# Получаем сообщение от бота
 def usd(message):																							# при выполнении команды /course_usd
 	money = get_money()		
 	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) к \
-Доллару США на сегодня: \n {l_c[4]}')
+Доллару США на сегодня: \n {money[152:187]}')
 
 
 @bot.callback_query_handler(lambda c: c.data == '/course_eur')												# Получаем сообщение от бота
 def course_eur(callback_query: telebot.types.CallbackQuery):												# при выполнении команды /course_eur через кнопку
 	money = get_money()		
 	bot.send_message(callback_query.from_user.id, f'Курс Белорусского рубля (BYN) к \
-Евро на сегодня: \n {l_c[5]}')
+Евро на сегодня: \n {money[187:215]}')
 
 @bot.message_handler(commands=['course_eur'])																# Получаем сообщение от бота
 def eur(message):																							# при выполнении команды /course_eur
 	money = get_money()		
 	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) к \
-Евро на сегодня: \n {l_c[5]}')
+Евро на сегодня: \n {money[187:215]}')
 
 
 @bot.callback_query_handler(lambda c: c.data == '/course_rub')												# Получаем сообщение от бота
 def course_rub(callback_query: telebot.types.CallbackQuery):												# при выполнении команды /course_rub через кнопку
 	money = get_money()		
 	bot.send_message(callback_query.from_user.id, f'Курс Белорусского рубля (BYN) к \
-Российскому рублю на сегодня: \n {l_c[16]}')
+Российскому рублю на сегодня: \n {money[616:659]}')
 
 @bot.message_handler(commands=['course_rub'])																# Получаем сообщение от бота
 def rub(message):																							# при выполнении команды /course_rub
 	money = get_money()	
 	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) к \
-Российскому рублю на сегодня: \n {l_c[16]}')
+Российскому рублю на сегодня: \n {money[616:659]}')
 
 
 @bot.callback_query_handler(lambda c: c.data == '/course_uah')												# Получаем сообщение от бота
 def course_uah(callback_query: telebot.types.CallbackQuery):												# при выполнении команды /course_uah через кнопку
 	money = get_money()	
 	bot.send_message(callback_query.from_user.id, f'Курс Белорусского рубля (BYN) к \
-Гривнам на сегодня: \n {l_c[2]}')
+Гривнам на сегодня: \n {money[81:113]}')
 
 @bot.message_handler(commands=['course_uah'])																# Получаем сообщение от бота
 def uah(message):																							# при выполнении команды /course_uah
 	money = get_money()		
 	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) к \
-Гривнам на сегодня: \n {l_c[2]}')
+Гривнам на сегодня: \n {money[81:113]}')
 
 
 @bot.callback_query_handler(lambda m: m.data == '/movies')													# Получаем сообщение от бота
