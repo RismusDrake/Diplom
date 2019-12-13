@@ -174,4 +174,4 @@ def location(message):																						# при выполнении ком
 	bot.send_message(message.chat.id, 'Нажмите пожалуйста на кнопку для передачи своего местоположения', reply_markup=keyboard)
 
 
-bot.polling(none_stop=True, interval=1)																		# Завершение кода и интервал времени ответа бота на сообщение
+bot.polling(none_stop=True, interval=3)																		# Завершение кода и интервал времени ответа бота на сообщение
