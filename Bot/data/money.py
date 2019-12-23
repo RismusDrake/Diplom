@@ -1,14 +1,27 @@
 import requests																					# Импорт библиотеки
-from .config import url_money																	# Импортирование данных из других файлов Python
+                                                                                                #Импортирование данных из других файлов Python
+from .config import CURRENCY_RATES_URL	#-сразу даем говорящее название, не создаем лишней локалки 
 
 
-def get_money():																				# Создание функции
-    url = url_money																				# Ссылка на получение курса валют
-    list_course = requests.get(url).json()
-    l_c = list()																				# Создание пустого списка
+def get_money():																				# Создание функции -очевидно
+    #Ссылка на получение курса валют -на вопрос "что это?" должны отвечать идентификаторы. Комментарии - на вопрос "зачем?"
 
-    for course in list_course:																	# Создание цикла for
-    	c = 'За ' + str(course.get('Cur_Scale')) + ' ' + course.get('Cur_Name') + '\
- (' + course.get('Cur_Abbreviation') + ') - ' + str(course.get('Cur_OfficialRate')) + ' BYN'	# Забираем интересующие нас данные
-    	l_c.append(c)																			# Записываем данные в список
-    return '\n'.join(l_c)																		# Завершение функции
+    currencies = requests.get( CURRENCY_RATES_URL ).json()
+    currency_rates = []	#-  l_c - плохое имя для переменной											# Создание пустого списка -очевидно
+
+    for currency in currencies:				#-мы итерируемся по валютам, у которых есть курс к BYN        Создание цикла for -очевидно
+        #-не стоит создавать временных переменных, либо стоит их грамотно именовать. Исключения - принятый стандарт кодирования(i как текущая итерация цикла, например).
+
+    	currency_rate = 'За {scale} {of_currency_named} ({abbreviation}) - {how_much_BYN} BYN'.format(
+                scale=              currency.get('Cur_Scale'),
+                of_currency_named=  currency.get('Cur_Name'),
+                abbreviation=       currency.get('Cur_Abbreviation'),
+                how_much_BYN= round(currency.get('Cur_OfficialRate'),2)) #-возможно, стоит использовать банковское округление? Тогда так.
+        #-подобное выравнивание не по PEP8, но в данном случае выявляет структуру конструируемой строки
+        #-таким макаром при необходимости можно будет запросто изменить шаблон сообщения и данные
+
+    	currency_rates.append(currency_rate)														# Записываем данные в список -очевидно
+    return '\n'.join(currency_rates)			# Завершение функции -очевидно, лучше было указать об операции над возвращаемым значением, зачем это
+
+#лишние комментарии также и добавляют информацию в код
+#бесполезные комментарии делают код сложнее, засоряя его
