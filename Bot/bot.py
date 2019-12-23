@@ -1,11 +1,11 @@
 import telebot 																								# Импортирование библиотек
 import pyowm
 from pyowm.exceptions import OWMError
-from data import bot_api, weather_api, get_money, get_movie											# Импортирование данных из других файлов Python
+from data import BOT_API, WEATHER_API, get_money, get_movies											# Импортирование данных из других файлов Python
 
 
-bot = telebot.TeleBot(bot_api)																				# Указываем какого бота запускать (API bot)
-owm = pyowm.OWM(weather_api, language = 'ru')																# Запуск погоды (API weather)
+bot = telebot.TeleBot(BOT_API)																				# Указываем какого бота запускать (API bot)
+owm = pyowm.OWM(WEATHER_API, language = 'ru')																# Запуск погоды (API weather)
 
 @bot.message_handler(commands=['start'])																	# Получаем сообщение от бота при его запуске 
 def bot_hello(message):																						# или выполнении команды /start
@@ -80,6 +80,9 @@ def bot_course_all(callback_query: telebot.types.CallbackQuery):											# п�
 	course_eur = telebot.types.InlineKeyboardButton('Курс Евро',callback_data='/course_eur')				# Создание кнопки для получения информации о курсе Евро
 	course_rub = telebot.types.InlineKeyboardButton('Курс Российского рубля',callback_data='/course_rub')	# Создание кнопки для получения информации о курсе Российского рубля
 	course_uah = telebot.types.InlineKeyboardButton('Курс Гривен',callback_data='/course_uah')				#  Создание кнопки для получения информации о курсе Гривен
+#for currency in currencies:
+#	currency.course_button = telebot.types.InlineKeyboardButton('Курс {currency.name.genitive}',callback_data='/course_{cource.name.short.lower()}')	#  Создание кнопки для получения информации о курсе Гривен
+
 	keyboard.add(bot_courses, course_usd, course_eur, course_rub, course_uah)
 	bot.send_message(callback_query.from_user.id, 'Какой курс валют вас интересует?', reply_markup=keyboard)
 
@@ -146,16 +149,19 @@ def uah(message):																							# при выполнении коман
 	money = get_money()		
 	bot.send_message(message.chat.id, f'Курс Белорусского рубля (BYN) к \
 Гривнам на сегодня: \n {money[81:113]}')
-
+#-хардкод {money[81:113]}
+#-код некоторых функций имеет общий шаблон (uah,rub..; uah_course, rub_course...)
+#-есть вомзожность написать общие функции работающие с объектами одного типа(например currency)
+#-шаблон сообщения: f'Курс {currency1.name.genitive} ({currency1.name.short}) к {currency2.name.dative} на сегодня: \n {currency1.cource[currency2.name.short]}'
 
 @bot.callback_query_handler(lambda m: m.data == '/movies')													# Получаем сообщение от бота
 def movies(callback_query: telebot.types.CallbackQuery):													# при выполнении команды /movies через кнопку
-	movies = get_movie()
+	movies = get_movies()
 	bot.send_message(callback_query.from_user.id, f'Показ фильмов на сегодня: \n{movies}')
 
 @bot.message_handler(commands=['movies'])																	# Получаем сообщение от бота
 def send_movies(message):																					# при выполнении команды /movies
-	movies = get_movie()
+	movies = get_movies()
 	bot.send_message(message.chat.id, f'Показ фильмов на сегодня: \n{movies}')
 
 
@@ -174,4 +180,15 @@ def location(message):																						# при выполнении ком
 	bot.send_message(message.chat.id, 'Нажмите пожалуйста на кнопку для передачи своего местоположения', reply_markup=keyboard)
 
 
-bot.polling(none_stop=True, interval=3)																		# Завершение кода и интервал времени ответа бота на сообщение
+bot.polling(none_stop=True, interval=3)	#-интервал как хардкод. Вынести в конфигурационные файлы?	# [s]Завершение кода[/s] и интервал времени ответа бота на сообщение
+
+#-много хардкода и повторения кода
+
+# lambda l: l.data == '/location' и подобные можно вынести в каррированый предикат
+# def is_data_equal_to( toValue ):
+#	return lambda x: x.data() == toValue
+
+#вместо:
+#@bot.callback_query_handlerTo( lambda l: l.data == '/location' )
+#использовать:
+#@bot.callback_query_handlerTo( is_data_equal_to('/location') )
